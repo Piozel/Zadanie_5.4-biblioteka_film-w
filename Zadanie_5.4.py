@@ -27,7 +27,18 @@
 #     Napisz funkcję, która uruchomi generate_views 10 razy.
 #     Napisz funkcję top_titles(), która zwróci wybraną ilość najpopularniejszych tytułów z biblioteki. Dla chętnych: dodaj do funkcji parametr content_type, którym wybierzesz czy mają zostać pokazane filmy, czy seriale.
 
+# Niech program po uruchomieniu działa w następujący sposób:
+
+#     Wyświetli na konsoli komunikat Biblioteka filmów.
+#     Wypełni bibliotekę treścią.
+#     Wygeneruje odtworzenia treści za pomocą funkcji generate_views.
+#     Wyświetli na konsoli komunikat Najpopularniejsze filmy i seriale dnia <data>, gdzie <data> to bieżąca data w formacie DD.MM.RRRR.
+#     Wyświetli listę top 3 najpopularniejszych tytułów.
+
+
+
 import random
+from datetime import datetime
 
 class Movie:
     def __init__(self, title, year_of_release, type, number_of_plays=0):
@@ -79,20 +90,21 @@ def search(library):
 
 
 def get_movie_or_serial(library, check):
-    name = [item for item in library if item.__class__.__name__== check]
+    name = [item for item in library if type(item) == check]
     return sorted(name, key=lambda name: name.title)
+
+
 
 
 def get_movies(library):
     """Zwraca posortowaną alfabetycznie listę filmów"""
-    movie_serial = get_movie_or_serial(library,"Movie")
+    movie_serial = get_movie_or_serial(library, Movie)  # Poprawione: przekazujemy klasę, nie string
     return movie_serial
-
 
 
 def get_series(library):
     """Zwraca posortowaną alfabetycznie listę seriali"""
-    movie_serial = get_movie_or_serial(library,"Serial")
+    movie_serial = get_movie_or_serial(library, Serial)  # Poprawione: przekazujemy klasę, nie string
     return movie_serial
 
 
@@ -111,8 +123,14 @@ def generate_views(library):
     item = random.choice(library)  # Losowy wybór z biblioteki
     views = random.randint(1, 100)  # Losowa liczba odtworzeń
     item.number_of_plays += views
-    print(f" {item} obejrzano {views} razy. Nowa liczba odtworzeń: {item.number_of_plays}")  
+    # print(f" {item} obejrzano {views} razy. Nowa liczba odtworzeń: {item.number_of_plays}")  
 
+def views(quantity, input_, type_="filmy i seriale"):
+    top = sorted(input_, key=lambda s: s.number_of_plays, reverse=True)[:quantity]
+    # print(f"\n Top {quantity} Najpopularniejsze {type_}:")
+    for m in top:
+        print(f"{m} - {m.number_of_plays} odtworzeń")
+   
 
 def top_titles(library):
     """Zwraca wybraną ilość najpopularniejszych tytułów z biblioteki"""
@@ -126,28 +144,32 @@ def top_titles(library):
     quantity = int(quantity)  # Konwersja na int
     
     if content_type == "serial":
-        top_series = sorted(get_series(library), key=lambda s: s.number_of_plays, reverse=True)[:quantity]
-        print(f"\n Top {quantity} Najpopularniejsze seriale:")
-        for s in top_series:
-            print(f"{s} - {s.number_of_plays} odtworzeń")
+        type_= "seriale"
+        input_ = get_series(library)
+        return views(quantity, input_, type_) 
+
     
     elif content_type == "film":
-        top_movies = sorted(get_movies(library), key=lambda s: s.number_of_plays, reverse=True)[:quantity]
-        print(f"\n Top {quantity} Najpopularniejsze filmy:")
-        for m in top_movies:
-            print(f"{m} - {m.number_of_plays} odtworzeń")
-    
+        type_ ="filmy"
+        input_ = get_movies(library)
+        return views(quantity, input_, type_)
+
     elif content_type == "serialfilm" or "filmserial":
-        top = sorted(library, key=lambda s: s.number_of_plays, reverse=True)[:quantity]
-        for m in top:
-            print(f"{m} - {m.number_of_plays} odtworzeń")
+        type_ = "filmy i seriale"
+        input_ = library
+        return views(quantity, input_)
    
     else:
         print("Niepoprawna opcja! Wpisz 'film' lub 'serial'.")
 
 
 if __name__ == "__main__":
-    library = [
+
+
+    print("Biblioteka filmów")  #Wyświetli na konsoli komunikat Biblioteka filmów.
+
+ #Wypełni bibliotekę treścią.
+    library = [   
     # Filmy
     Movie("Inception", 2010, "Sci-Fi", 150),
     Movie("Interstellar", 2014, "Sci-Fi", 300),
@@ -173,14 +195,22 @@ if __name__ == "__main__":
     Serial("Black Mirror", 2011, "Sci-Fi", 420, episode_number=3, season_number=5)
     ]
 
-    # odtwarzanie filmu lub serialu
-    play_by_title(library, "Inception")  
-    play_by_title(library, "Game of Thrones")
 
-    search(library) 
+
+
+    #Wygeneruje odtworzenia treści za pomocą funkcji generate_views. 
     generate_views(library)
-    top_titles(library)
+
+    # Wyświetli na konsoli komunikat Najpopularniejsze filmy i seriale dnia <data>, gdzie <data> to bieżąca data w formacie DD.MM.RRRR.
+
+    print(f"Najpopularniejsze filmy i seriale dnia {datetime.today().strftime("%d.%m.%Y")} ")
+
+
+
+    # Wyświetli listę top 3 najpopularniejszych tytułów.
+    views(3, library, )
 
     
+
 
     
