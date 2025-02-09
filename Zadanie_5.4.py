@@ -98,20 +98,20 @@ def get_movie_or_serial(library, check):
 
 def get_movies(library):
     """Zwraca posortowaną alfabetycznie listę filmów"""
-    movie_serial = get_movie_or_serial(library, Movie)  # Poprawione: przekazujemy klasę, nie string
+    movie_serial = get_movie_or_serial(library, Movie)  
     return movie_serial
 
 
 def get_series(library):
     """Zwraca posortowaną alfabetycznie listę seriali"""
-    movie_serial = get_movie_or_serial(library, Serial)  # Poprawione: przekazujemy klasę, nie string
+    movie_serial = get_movie_or_serial(library, Serial)  
     return movie_serial
 
 
 
 
 def repeat_10_times(func):
-    """Dekorator wykonujący funkcję 10 razy."""           #  Zapytać sie czy skłądnia jest zawsze podobna
+    """Dekorator wykonujący funkcję 10 razy."""           
     def wrapper(library):
         for _ in range(10):
             func(library)       
