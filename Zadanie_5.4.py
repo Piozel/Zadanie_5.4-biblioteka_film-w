@@ -123,11 +123,10 @@ def generate_views(library):
     item = random.choice(library)  # Losowy wybór z biblioteki
     views = random.randint(1, 100)  # Losowa liczba odtworzeń
     item.number_of_plays += views
-    # print(f" {item} obejrzano {views} razy. Nowa liczba odtworzeń: {item.number_of_plays}")  
+ 
 
 def views(quantity, input_, type_="filmy i seriale"):
     top = sorted(input_, key=lambda s: s.number_of_plays, reverse=True)[:quantity]
-    # print(f"\n Top {quantity} Najpopularniejsze {type_}:")
     for m in top:
         print(f"{m} - {m.number_of_plays} odtworzeń")
    
@@ -139,25 +138,25 @@ def top_titles(library):
 
     if not quantity.isdigit():  # Sprawdzam czy liczba
         print("❌ Miałeś podać liczbę!")
-        return
+        
     
     quantity = int(quantity)  # Konwersja na int
     
     if content_type == "serial":
         type_= "seriale"
         input_ = get_series(library)
-        return views(quantity, input_, type_) 
+        views(quantity, input_, type_) 
 
     
     elif content_type == "film":
         type_ ="filmy"
         input_ = get_movies(library)
-        return views(quantity, input_, type_)
+        views(quantity, input_, type_)
 
     elif content_type == "serialfilm" or "filmserial":
         type_ = "filmy i seriale"
         input_ = library
-        return views(quantity, input_)
+        views(quantity, input_, type_)
    
     else:
         print("Niepoprawna opcja! Wpisz 'film' lub 'serial'.")
@@ -209,6 +208,8 @@ if __name__ == "__main__":
 
     # Wyświetli listę top 3 najpopularniejszych tytułów.
     views(3, library, )
+
+    
 
     
 
