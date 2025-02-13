@@ -125,7 +125,7 @@ def generate_views(library):
     item.number_of_plays += views
  
 
-def views(quantity, input_, type_="filmy i seriale"):
+def views(quantity, input_):
     top = sorted(input_, key=lambda s: s.number_of_plays, reverse=True)[:quantity]
     for m in top:
         print(f"{m} - {m.number_of_plays} odtworzeń")
@@ -207,11 +207,8 @@ if __name__ == "__main__":
 
 
     # Wyświetli listę top 3 najpopularniejszych tytułów.
-    views(3, library, )
+    views(3, library)
 
-    
-
-    
 
 
     
