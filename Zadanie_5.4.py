@@ -202,7 +202,7 @@ if __name__ == "__main__":
 
     # Wyświetli na konsoli komunikat Najpopularniejsze filmy i seriale dnia <data>, gdzie <data> to bieżąca data w formacie DD.MM.RRRR.
 
-    print(f"Najpopularniejsze filmy i seriale dnia {datetime.today().strftime("%d.%m.%Y")} ")
+    print(f"Najpopularniejsze filmy i seriale dnia {datetime.today().strftime('%d.%m.%Y')}")
 
 
 
