@@ -137,26 +137,25 @@ def top_titles(library):
     quantity = input("Ile z nich chcesz zobaczyć? ").strip()
 
     if not quantity.isdigit():  # Sprawdzam czy liczba
-        print("❌ Miałeś podać liczbę!")
-        
+        print("❌ Miałeś podać liczbę!") 
     
     quantity = int(quantity)  # Konwersja na int
     
     if content_type == "serial":
-        type_= "seriale"
+        
         input_ = get_series(library)
-        views(quantity, input_, type_) 
+        views(quantity, input_) 
 
     
     elif content_type == "film":
-        type_ ="filmy"
+        
         input_ = get_movies(library)
-        views(quantity, input_, type_)
+        views(quantity, input_)
 
     elif content_type == "serialfilm" or "filmserial":
-        type_ = "filmy i seriale"
+        
         input_ = library
-        views(quantity, input_, type_)
+        views(quantity, input_)
    
     else:
         print("Niepoprawna opcja! Wpisz 'film' lub 'serial'.")
@@ -208,7 +207,9 @@ if __name__ == "__main__":
 
     # Wyświetli listę top 3 najpopularniejszych tytułów.
     views(3, library)
+    top_titles(library)
 
+    
 
 
     
